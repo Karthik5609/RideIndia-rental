@@ -69,6 +69,13 @@ app.use(
 );
 app.use(
   helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        "img-src": ["'self'", "data:", "blob:", "https:"],
+        "connect-src": ["'self'", "https:"]
+      }
+    },
     crossOriginResourcePolicy: { policy: "cross-origin" }
   })
 );
