@@ -1,0 +1,1702 @@
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Sora:wght@300;400;600;700&display=swap");
+
+:root {
+  --bg-deep: #04060d;
+  --bg-mid: #0b1222;
+  --glass: rgba(14, 20, 35, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.16);
+  --text-main: #e9edf7;
+  --text-dim: #9aa7c2;
+  --saffron: #ff9933;
+  --saffron-strong: #ff8a15;
+  --saffron-soft: rgba(255, 153, 51, 0.25);
+  --saffron-glow: rgba(255, 153, 51, 0.42);
+  --ice: #78e3ff;
+  --danger: #ff6b6b;
+  --ok: #55d38f;
+  --hover-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Sora", sans-serif;
+  color: var(--text-main);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(255, 153, 51, 0.24), transparent 32%),
+    radial-gradient(circle at 90% 12%, rgba(120, 227, 255, 0.1), transparent 25%),
+    linear-gradient(130deg, var(--bg-deep), var(--bg-mid) 50%, #050913);
+}
+
+.app-root {
+  position: relative;
+}
+
+.webgpu-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.webgpu-canvas {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+}
+
+.webgpu-fallback {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.45);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  border-radius: 1rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+}
+
+.hero-copy,
+.auth-panel,
+.catalog-section > .glass-card,
+.curated-route,
+.trips-section {
+  transition: transform 0.28s var(--hover-ease), border-color 0.28s ease, box-shadow 0.28s ease;
+}
+
+.hero-copy:hover,
+.auth-panel:hover,
+.catalog-section > .glass-card:hover,
+.curated-route:hover,
+.trips-section:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 153, 51, 0.34);
+  box-shadow: 0 30px 62px rgba(0, 0, 0, 0.3);
+}
+
+.nav-wrap {
+  position: sticky;
+  top: 1rem;
+  z-index: 20;
+  margin: 1rem auto 0;
+  width: min(1150px, calc(100% - 2rem));
+  padding: 0.7rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-color: rgba(255, 153, 51, 0.28);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.brand-logo {
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 18px rgba(255, 153, 51, 0.3);
+  transition: transform 0.24s var(--hover-ease), box-shadow 0.24s ease;
+}
+
+.brand-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand-copy {
+  display: grid;
+  gap: 0.15rem;
+  line-height: 1;
+}
+
+.brand-badge {
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #1b1207;
+  background: linear-gradient(120deg, #ff8a15, #ffd37d);
+  border: 1px solid rgba(255, 204, 150, 0.6);
+  padding: 0.2rem 0.58rem;
+  border-radius: 999px;
+  box-shadow: 0 0 24px rgba(255, 153, 51, 0.33);
+  transition: transform 0.24s var(--hover-ease), box-shadow 0.24s ease, filter 0.24s ease;
+}
+
+.brand-tag {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.7rem;
+  color: rgba(240, 228, 215, 0.92);
+  letter-spacing: 0.05em;
+  transition: color 0.24s ease;
+}
+
+.brand:hover .brand-logo {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 0 24px rgba(255, 153, 51, 0.42);
+}
+
+.brand:hover .brand-badge {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+  box-shadow: 0 0 30px rgba(255, 153, 51, 0.45);
+}
+
+.brand:hover .brand-tag {
+  color: #fff4e0;
+}
+
+.nav-links {
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+.nav-links button {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  color: var(--text-main);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s var(--hover-ease);
+}
+
+.nav-links button::after {
+  content: "";
+  position: absolute;
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 0.28rem;
+  height: 1.5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 153, 51, 0.2), rgba(255, 190, 114, 0.9));
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.22s var(--hover-ease);
+}
+
+.nav-links button:hover {
+  transform: translateY(-1px);
+  border-color: var(--saffron-soft);
+  color: #ffb769;
+  background: rgba(255, 153, 51, 0.08);
+}
+
+.nav-links button:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-user {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text-dim);
+}
+
+.btn-outline,
+.btn-primary {
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.55rem 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.btn-outline {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  transition:
+    transform 0.2s var(--hover-ease),
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ff8a15, #ffd27a);
+  color: #1f1404;
+  transition: transform 0.2s var(--hover-ease), filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.03);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(255, 153, 51, 0.28);
+}
+
+.btn-danger {
+  border-color: rgba(255, 107, 107, 0.3);
+  color: #ffb6b6;
+}
+
+.btn-outline:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 153, 51, 0.4);
+  background: rgba(255, 153, 51, 0.09);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.content-shell {
+  width: min(1150px, calc(100% - 2rem));
+  margin: 1rem auto 3rem;
+  display: grid;
+  gap: 1rem;
+}
+
+#explore,
+#routes,
+#my-trips {
+  scroll-margin-top: 6.4rem;
+}
+
+.hero-copy {
+  padding: clamp(1rem, 2.5vw, 2rem);
+}
+
+.hero-label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.9rem;
+  border-radius: 999px;
+  color: #ffbe72;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(255, 153, 51, 0.48);
+  background: linear-gradient(120deg, rgba(9, 18, 38, 0.9), rgba(16, 30, 58, 0.9));
+  box-shadow: 0 8px 28px rgba(255, 153, 51, 0.22);
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.26rem 0.84rem;
+  border-radius: 999px;
+  color: #191108;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  background: linear-gradient(120deg, var(--saffron-strong), #ffd27a);
+  box-shadow: 0 6px 24px rgba(255, 153, 51, 0.22);
+}
+
+.hero-copy h1 {
+  margin: 0.8rem 0 0.6rem;
+  font-size: clamp(1.6rem, 4vw, 3.1rem);
+  line-height: 1.1;
+}
+
+.accent-text {
+  color: #ffb058;
+  text-shadow: 0 0 22px rgba(255, 153, 51, 0.26);
+}
+
+.hero-copy p {
+  margin: 0;
+  color: var(--text-dim);
+}
+
+.auth-panel {
+  padding: 1rem;
+}
+
+.auth-mode {
+  display: inline-flex;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.auth-mode button {
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-main);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.auth-mode button:hover {
+  border-color: rgba(255, 153, 51, 0.32);
+  color: #ffc684;
+  background: rgba(255, 153, 51, 0.08);
+}
+
+.auth-mode button.active {
+  border-color: var(--saffron-soft);
+  color: var(--saffron);
+}
+
+.auth-form {
+  display: grid;
+  gap: 0.65rem;
+}
+
+input,
+select {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text-main);
+  border-radius: 0.7rem;
+  padding: 0.6rem 0.7rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+select {
+  color-scheme: dark;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #ffbe72 50%),
+    linear-gradient(135deg, #ffbe72 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(1em + 1px),
+    calc(100% - 12px) calc(1em + 1px);
+  background-size:
+    6px 6px,
+    6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 2.2rem;
+}
+
+select option {
+  color: #e9edf7;
+  background: #111a30;
+}
+
+input::placeholder {
+  color: #8994ad;
+}
+
+input:hover,
+select:hover {
+  border-color: rgba(255, 153, 51, 0.35);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: rgba(255, 153, 51, 0.6);
+  box-shadow: 0 0 0 3px rgba(255, 153, 51, 0.14);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.catalog-section {
+  display: grid;
+  gap: 1rem;
+}
+
+.section-head h2 {
+  margin: 0;
+}
+
+.section-head p {
+  margin: 0.35rem 0 0;
+  color: var(--text-dim);
+}
+
+.filter-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.hint {
+  color: #9bd3ff;
+}
+
+.error-text {
+  color: var(--danger);
+}
+
+.bike-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.bike-card {
+  overflow: hidden;
+  padding: 0;
+  transition:
+    transform 0.25s var(--hover-ease),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.bike-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  transition: transform 0.35s ease;
+}
+
+.bike-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 153, 51, 0.4);
+  box-shadow: 0 22px 40px rgba(0, 0, 0, 0.35);
+}
+
+.bike-card:hover .bike-image {
+  transform: scale(1.04);
+}
+
+.bike-card:hover h3 {
+  color: #ffd19a;
+}
+
+.bike-card-body {
+  padding: 0.9rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.bike-card-body h3 {
+  margin: 0;
+}
+
+.bike-card-body p {
+  margin: 0;
+  color: var(--text-dim);
+}
+
+.price {
+  color: var(--saffron) !important;
+  font-weight: 700;
+}
+
+.booking-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.booking-row-single {
+  grid-template-columns: 1fr;
+}
+
+.curated-route {
+  padding: 1rem;
+}
+
+.routes-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.route-card {
+  border-radius: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: linear-gradient(
+    160deg,
+    rgba(255, 153, 51, 0.12),
+    rgba(255, 255, 255, 0.02) 38%,
+    rgba(120, 227, 255, 0.1)
+  );
+  padding: 1rem;
+  transition:
+    transform 0.25s var(--hover-ease),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.route-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 153, 51, 0.38);
+  box-shadow: 0 20px 34px rgba(0, 0, 0, 0.28);
+}
+
+.route-card:hover h3 {
+  color: #ffd29e;
+}
+
+.route-card h3,
+.route-card h4 {
+  margin: 0.45rem 0;
+}
+
+.route-card ul {
+  margin: 0.4rem 0 0.8rem;
+  padding-left: 1.2rem;
+  color: var(--text-dim);
+}
+
+.route-meta {
+  color: var(--text-dim);
+}
+
+.trips-section {
+  padding: 1rem;
+}
+
+.trip-list {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.trip-item {
+  display: grid;
+  gap: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.8rem;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.03);
+  transition:
+    transform 0.25s var(--hover-ease),
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.trip-item:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 153, 51, 0.34);
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.25);
+}
+
+.section-head code {
+  color: #ffbf79;
+}
+
+.trip-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.trip-main {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.trip-thumb {
+  width: 96px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  transition: transform 0.25s var(--hover-ease), box-shadow 0.25s ease;
+}
+
+.trip-item:hover .trip-thumb {
+  transform: scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.28);
+}
+
+.trip-item h3 {
+  margin: 0;
+}
+
+.trip-item p {
+  margin: 0.25rem 0 0;
+  color: var(--text-dim);
+}
+
+.trip-metrics {
+  min-width: 120px;
+  text-align: right;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.status-pill {
+  display: inline-flex;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-transform: capitalize;
+  font-size: 0.8rem;
+}
+
+.status-pill.confirmed,
+.status-pill.ongoing {
+  color: var(--ok);
+  border-color: rgba(85, 211, 143, 0.4);
+}
+
+.status-pill.cancelled {
+  color: var(--danger);
+  border-color: rgba(255, 107, 107, 0.4);
+}
+
+.trip-actions {
+  margin-top: 0.2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.45rem;
+}
+
+.trip-edit-form {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 0.7rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  display: grid;
+  gap: 0.55rem;
+}
+
+.trip-edit-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(4, 9, 20, 0.72);
+  backdrop-filter: blur(5px);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.modal-card {
+  width: min(520px, calc(100vw - 2rem));
+  padding: 1rem;
+}
+
+.modal-card h3 {
+  margin: 0;
+}
+
+.modal-card p {
+  margin: 0.7rem 0 0;
+  color: var(--text-dim);
+}
+
+.modal-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-copy,
+  .auth-panel,
+  .catalog-section > .glass-card,
+  .curated-route,
+  .trips-section,
+  .bike-card,
+  .route-card,
+  .trip-item,
+  .trip-thumb,
+  .btn-outline,
+  .btn-primary,
+  .nav-links button,
+  .brand-logo,
+  .brand-badge {
+    transition: none !important;
+  }
+
+  .hero-copy:hover,
+  .auth-panel:hover,
+  .catalog-section > .glass-card:hover,
+  .curated-route:hover,
+  .trips-section:hover,
+  .bike-card:hover,
+  .route-card:hover,
+  .trip-item:hover,
+  .nav-links button:hover,
+  .btn-outline:hover,
+  .btn-primary:hover {
+    transform: none !important;
+  }
+}
+
+.loader-screen {
+  --loader-duration: 4.2s;
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+  text-align: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 153, 51, 0.12), transparent 35%),
+    radial-gradient(circle at 85% 75%, rgba(120, 227, 255, 0.12), transparent 30%),
+    linear-gradient(145deg, #050913, #0b1325);
+}
+
+.loader-screen p {
+  margin: 0;
+  color: #cfe6ff;
+  letter-spacing: 0.02em;
+}
+
+.truck-loader-frame {
+  position: relative;
+  width: min(460px, 92vw);
+  height: 220px;
+  border-radius: 1rem;
+  border: none;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+}
+
+.ride-scene {
+  width: min(560px, 88vw);
+  height: 220px;
+  position: relative;
+  margin-inline: auto;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 75% 20%, rgba(120, 227, 255, 0.12), transparent 40%),
+    radial-gradient(circle at 20% 10%, rgba(255, 153, 51, 0.16), transparent 42%),
+    linear-gradient(135deg, rgba(10, 20, 41, 0.88), rgba(8, 15, 33, 0.92));
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+}
+
+.loader-webgpu-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.loader-webgpu-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0.95;
+}
+
+.loader-webgpu-fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255, 153, 51, 0.24), transparent 42%),
+    radial-gradient(circle at 70% 35%, rgba(120, 227, 255, 0.15), transparent 45%);
+}
+
+.truck-loader {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.truck-wrapper {
+  width: 220px;
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.truck-body {
+  width: 132px;
+  margin-bottom: 6px;
+  animation: truck-motion 1s linear infinite;
+}
+
+.truck-svg {
+  width: 132px;
+  display: block;
+}
+
+.truck-tires {
+  width: 132px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 0 15px;
+  position: absolute;
+  bottom: 0;
+}
+
+.tire-svg {
+  width: 24px;
+  animation: truck-wheel-spin 0.9s linear infinite;
+}
+
+.truck-road {
+  width: 100%;
+  height: 2px;
+  background-color: #282828;
+  position: relative;
+  bottom: 0;
+  align-self: flex-end;
+  border-radius: 3px;
+}
+
+.truck-road::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 100%;
+  background-color: #282828;
+  right: -50%;
+  border-radius: 3px;
+  animation: truck-road-animation 1.4s linear infinite;
+  border-left: 10px solid #ffffff;
+}
+
+.truck-road::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 100%;
+  background-color: #282828;
+  right: -65%;
+  border-radius: 3px;
+  animation: truck-road-animation 1.4s linear infinite;
+  border-left: 4px solid #ffffff;
+}
+
+.lamp-post {
+  position: absolute;
+  bottom: 0;
+  right: -90%;
+  width: 6px;
+  height: 90px;
+  border-radius: 999px;
+  background: #1e2f4d;
+  animation: truck-road-animation 1.4s linear infinite;
+}
+
+.lamp-post::before {
+  content: "";
+  position: absolute;
+  left: -3px;
+  bottom: 0;
+  width: 12px;
+  height: 8px;
+  border-radius: 4px;
+  background: #122138;
+}
+
+.lamp-arm {
+  position: absolute;
+  left: -30px;
+  top: 20px;
+  width: 30px;
+  height: 4px;
+  border-radius: 999px;
+  background: #1e2f4d;
+}
+
+.lamp-head {
+  position: absolute;
+  left: -40px;
+  top: 16px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #79dfff;
+  box-shadow: 0 0 14px rgba(121, 223, 255, 0.75);
+}
+
+.scene-road {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  height: 56px;
+  z-index: 2;
+  background: linear-gradient(90deg, rgba(17, 30, 55, 0.85), rgba(17, 31, 58, 0.97));
+}
+
+.scene-road::before {
+  content: "";
+  position: absolute;
+  left: -12%;
+  right: -12%;
+  top: 26px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.scene-road::after {
+  content: "";
+  position: absolute;
+  left: -30%;
+  right: -30%;
+  top: 26px;
+  height: 2px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.92) 0 16px,
+      transparent 16px 34px
+    );
+  animation: roadStripe var(--loader-duration) linear infinite;
+}
+
+.walker {
+  position: absolute;
+  left: 0;
+  bottom: 62px;
+  width: 44px;
+  height: 108px;
+  z-index: 3;
+  animation:
+    walkerMove var(--loader-duration) linear infinite,
+    walkerFade var(--loader-duration) linear infinite;
+}
+
+.walker-helmet {
+  position: absolute;
+  left: 12px;
+  top: 0;
+  width: 22px;
+  height: 20px;
+  border-radius: 55% 55% 48% 48%;
+  background: linear-gradient(135deg, #2f405d, #16253a);
+}
+
+.walker-visor {
+  position: absolute;
+  left: 20px;
+  top: 6px;
+  width: 10px;
+  height: 6px;
+  border-radius: 999px;
+  background: #96e6ff;
+}
+
+.walker-torso {
+  position: absolute;
+  left: 14px;
+  top: 20px;
+  width: 18px;
+  height: 34px;
+  border-radius: 7px;
+  background: linear-gradient(180deg, #30496c, #1a2b43);
+}
+
+.walker-arm,
+.walker-leg {
+  position: absolute;
+  transform-origin: top center;
+  background: #263a56;
+  border-radius: 999px;
+}
+
+.walker-arm {
+  top: 23px;
+  width: 6px;
+  height: 25px;
+}
+
+.walker-arm.left {
+  left: 9px;
+  animation: armLeft var(--loader-duration) linear infinite;
+}
+
+.walker-arm.right {
+  left: 30px;
+  animation: armRight var(--loader-duration) linear infinite;
+}
+
+.walker-leg {
+  top: 52px;
+  width: 7px;
+  height: 33px;
+}
+
+.walker-leg.left {
+  left: 13px;
+  animation: legLeft var(--loader-duration) linear infinite;
+}
+
+.walker-leg.right {
+  left: 26px;
+  animation: legRight var(--loader-duration) linear infinite;
+}
+
+.walker-boot {
+  position: absolute;
+  top: 84px;
+  width: 10px;
+  height: 6px;
+  border-radius: 999px;
+  background: #101a28;
+}
+
+.walker-boot.left {
+  left: 10px;
+  animation: bootLeft var(--loader-duration) linear infinite;
+}
+
+.walker-boot.right {
+  left: 25px;
+  animation: bootRight var(--loader-duration) linear infinite;
+}
+
+.scene-bike {
+  position: absolute;
+  left: 250px;
+  bottom: 40px;
+  width: 230px;
+  height: 122px;
+  z-index: 4;
+  animation: bikeRide var(--loader-duration) linear infinite;
+}
+
+.bike-wheel {
+  position: absolute;
+  bottom: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 5px solid #ff9d2f;
+  background: radial-gradient(circle at center, #0d1629 0 33%, transparent 35%);
+  animation: wheelSpin var(--loader-duration) linear infinite;
+}
+
+.bike-wheel::after {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.28);
+}
+
+.bike-wheel.rear {
+  left: 20px;
+}
+
+.bike-wheel.front {
+  right: 10px;
+}
+
+.bike-swingarm,
+.bike-frame,
+.bike-tank,
+.bike-seat,
+.bike-tail,
+.bike-fork,
+.bike-handle,
+.bike-headlight {
+  position: absolute;
+  background: #dbe5f7;
+}
+
+.bike-swingarm {
+  left: 64px;
+  bottom: 27px;
+  width: 84px;
+  height: 4px;
+  border-radius: 999px;
+}
+
+.bike-frame {
+  left: 78px;
+  bottom: 33px;
+  width: 74px;
+  height: 6px;
+  border-radius: 999px;
+}
+
+.bike-tank {
+  left: 112px;
+  bottom: 44px;
+  width: 30px;
+  height: 12px;
+  border-radius: 6px 10px 4px 4px;
+  transform: skewX(-16deg);
+}
+
+.bike-seat {
+  left: 98px;
+  bottom: 55px;
+  width: 28px;
+  height: 6px;
+  border-radius: 999px;
+}
+
+.bike-tail {
+  left: 84px;
+  bottom: 52px;
+  width: 17px;
+  height: 4px;
+  border-radius: 999px;
+}
+
+.bike-fork {
+  right: 50px;
+  bottom: 35px;
+  width: 5px;
+  height: 21px;
+  transform: rotate(18deg);
+  transform-origin: bottom center;
+  border-radius: 999px;
+}
+
+.bike-handle {
+  right: 55px;
+  bottom: 58px;
+  width: 20px;
+  height: 4px;
+  transform: rotate(-20deg);
+  border-radius: 999px;
+}
+
+.bike-headlight {
+  right: 39px;
+  bottom: 56px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffe7b8;
+  box-shadow: 0 0 10px rgba(255, 226, 165, 0.7);
+}
+
+.rider-mounted {
+  position: absolute;
+  left: 103px;
+  bottom: 54px;
+  width: 50px;
+  height: 54px;
+  opacity: 0;
+  animation:
+    riderReveal var(--loader-duration) linear infinite,
+    riderSettle var(--loader-duration) linear infinite;
+}
+
+.rider-helmet {
+  position: absolute;
+  left: 17px;
+  top: 0;
+  width: 20px;
+  height: 17px;
+  border-radius: 55% 55% 48% 48%;
+  background: linear-gradient(135deg, #2f405d, #16253a);
+}
+
+.rider-visor {
+  position: absolute;
+  left: 24px;
+  top: 5px;
+  width: 8px;
+  height: 5px;
+  border-radius: 999px;
+  background: #9be8ff;
+}
+
+.rider-torso {
+  position: absolute;
+  left: 15px;
+  top: 16px;
+  width: 20px;
+  height: 22px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #334f73, #1d3049);
+}
+
+.rider-arm {
+  position: absolute;
+  left: 28px;
+  top: 20px;
+  width: 14px;
+  height: 5px;
+  border-radius: 999px;
+  transform: rotate(-24deg);
+  transform-origin: left center;
+  background: #263a56;
+}
+
+.rider-leg {
+  position: absolute;
+  left: 16px;
+  top: 36px;
+  width: 22px;
+  height: 6px;
+  border-radius: 999px;
+  transform: rotate(18deg);
+  background: #243850;
+}
+
+.rider-boot {
+  position: absolute;
+  left: 32px;
+  top: 43px;
+  width: 10px;
+  height: 5px;
+  border-radius: 999px;
+  background: #131d2b;
+}
+
+.speed-line {
+  position: absolute;
+  left: -42px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(150, 220, 255, 0.85));
+  opacity: 0;
+  animation: speedLine var(--loader-duration) linear infinite;
+}
+
+.speed-line.one {
+  bottom: 70px;
+  width: 35px;
+}
+
+.speed-line.two {
+  bottom: 57px;
+  width: 46px;
+  animation-delay: 0.12s;
+}
+
+.speed-line.three {
+  bottom: 44px;
+  width: 32px;
+  animation-delay: 0.24s;
+}
+
+@keyframes roadStripe {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(52px);
+  }
+}
+
+@keyframes truck-motion {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes truck-road-animation {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-350px);
+  }
+}
+
+@keyframes truck-wheel-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes walkerMove {
+  0% {
+    transform: translateX(-160px);
+  }
+  42% {
+    transform: translateX(160px);
+  }
+  56%,
+  100% {
+    transform: translateX(176px);
+  }
+}
+
+@keyframes walkerFade {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes armLeft {
+  0%,
+  8% {
+    transform: rotate(24deg);
+  }
+  16% {
+    transform: rotate(-22deg);
+  }
+  24% {
+    transform: rotate(24deg);
+  }
+  32% {
+    transform: rotate(-22deg);
+  }
+  42% {
+    transform: rotate(10deg);
+  }
+  52%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes armRight {
+  0%,
+  8% {
+    transform: rotate(-22deg);
+  }
+  16% {
+    transform: rotate(24deg);
+  }
+  24% {
+    transform: rotate(-22deg);
+  }
+  32% {
+    transform: rotate(24deg);
+  }
+  42% {
+    transform: rotate(-10deg);
+  }
+  52%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes legLeft {
+  0%,
+  8% {
+    transform: rotate(20deg);
+  }
+  16% {
+    transform: rotate(-20deg);
+  }
+  24% {
+    transform: rotate(20deg);
+  }
+  32% {
+    transform: rotate(-20deg);
+  }
+  42% {
+    transform: rotate(10deg);
+  }
+  52%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes legRight {
+  0%,
+  8% {
+    transform: rotate(-20deg);
+  }
+  16% {
+    transform: rotate(20deg);
+  }
+  24% {
+    transform: rotate(-20deg);
+  }
+  32% {
+    transform: rotate(20deg);
+  }
+  42% {
+    transform: rotate(-10deg);
+  }
+  52%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes bootLeft {
+  0%,
+  8% {
+    transform: translateX(-2px);
+  }
+  16% {
+    transform: translateX(2px);
+  }
+  24% {
+    transform: translateX(-2px);
+  }
+  32% {
+    transform: translateX(2px);
+  }
+  52%,
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes bootRight {
+  0%,
+  8% {
+    transform: translateX(2px);
+  }
+  16% {
+    transform: translateX(-2px);
+  }
+  24% {
+    transform: translateX(2px);
+  }
+  32% {
+    transform: translateX(-2px);
+  }
+  52%,
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes bikeRide {
+  0%,
+  56% {
+    transform: translateX(0);
+  }
+  74% {
+    transform: translateX(20px);
+  }
+  100% {
+    transform: translateX(270px);
+  }
+}
+
+@keyframes wheelSpin {
+  0%,
+  56% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(1260deg);
+  }
+}
+
+@keyframes riderReveal {
+  0%,
+  46% {
+    opacity: 0;
+  }
+  56%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes riderSettle {
+  0%,
+  48% {
+    transform: translate(-8px, -10px);
+  }
+  58% {
+    transform: translate(0, 0);
+  }
+  68% {
+    transform: translate(1px, -1px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes speedLine {
+  0%,
+  62% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  74% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(96px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .bike-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-wrap {
+    display: grid;
+    justify-content: stretch;
+    gap: 0.7rem;
+    top: 0.65rem;
+    padding: 0.75rem;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-user {
+    justify-content: space-between;
+  }
+
+  .filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bike-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trip-metrics {
+    text-align: left;
+  }
+
+  .trip-summary,
+  .trip-main {
+    flex-direction: column;
+  }
+
+  .trip-thumb {
+    width: 100%;
+    height: 170px;
+  }
+
+  .trip-actions,
+  .trip-edit-actions {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .routes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ride-scene {
+    height: 190px;
+  }
+
+  .scene-bike {
+    left: 190px;
+  }
+}
+
+@media (max-width: 640px) {
+  .content-shell,
+  .nav-wrap {
+    width: calc(100% - 1rem);
+  }
+
+  .hero-copy {
+    padding: 0.9rem;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(1.45rem, 8vw, 2rem);
+  }
+
+  .filter-grid,
+  .booking-row {
+    grid-template-columns: 1fr;
+  }
+
+  .trip-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .trip-actions button,
+  .trip-edit-actions button {
+    flex: 1 1 160px;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .modal-actions button {
+    width: 100%;
+  }
+
+  .ride-scene {
+    height: 170px;
+  }
+
+  .scene-bike {
+    left: 144px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-badge {
+    font-size: 1rem;
+    padding: 0.18rem 0.5rem;
+  }
+
+  .brand-tag {
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+  }
+
+  .nav-links {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links button {
+    width: 100%;
+    text-align: center;
+  }
+
+  input,
+  select,
+  .btn-outline,
+  .btn-primary {
+    font-size: 16px;
+  }
+}

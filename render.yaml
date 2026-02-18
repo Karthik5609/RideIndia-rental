@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: ride-india
+    runtime: node
+    plan: free
+    buildCommand: npm run install:all && npm run build
+    startCommand: npm run start
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: FRONTEND_URL
+        sync: false
+      - key: RATE_LIMIT_WINDOW_MINUTES
+        value: 15
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: 400
+      - key: RATE_LIMIT_AUTH_MAX_REQUESTS
+        value: 20
+      - key: RATE_LIMIT_BOOKING_MAX_REQUESTS
+        value: 80
