@@ -43,16 +43,28 @@ if (isProduction) {
 app.disable("x-powered-by");
 
 app.use(
-  cors({
-    origin(origin, callback) {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.length === 0 || allowedOrigins.includes(normalizeOrigin(origin))) {
-        return callback(null, true);
-      }
-      const error = new Error("Origin not allowed by CORS policy.");
-      error.status = 403;
-      return callback(error);
+  cors((req, callback) => {
+    const origin = req.header("origin");
+
+    // Allow requests without an Origin header (server health checks, curl, etc).
+    if (!origin) return callback(null, { origin: true });
+
+    const normalizedOrigin = normalizeOrigin(origin);
+    const host = req.get("host");
+    const requestHostOrigin = host ? normalizeOrigin(`${req.protocol}://${host}`) : "";
+    const isSameOrigin = requestHostOrigin && normalizedOrigin === requestHostOrigin;
+
+    if (
+      isSameOrigin ||
+      allowedOrigins.length === 0 ||
+      allowedOrigins.includes(normalizedOrigin)
+    ) {
+      return callback(null, { origin: true });
     }
+
+    const error = new Error("Origin not allowed by CORS policy.");
+    error.status = 403;
+    return callback(error);
   })
 );
 app.use(
