@@ -29,7 +29,7 @@ function getDefaultBookingForm(pickupCity) {
   };
 }
 
-export default function BikeCatalog() {
+export default function BikeCatalog({ onBookingCreated = () => {} }) {
   const { isAuthenticated } = useAuth();
   const [bikes, setBikes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -117,6 +117,14 @@ export default function BikeCatalog() {
       };
       const { data } = await api.post("/bookings", payload);
       setFeedback(data.message || "Booking confirmed.");
+      if (data?.data?._id) {
+        onBookingCreated(data.data);
+        requestAnimationFrame(() => {
+          document
+            .getElementById("my-trips")
+            ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
     } catch (apiError) {
       setFeedback(getApiErrorMessage(apiError, "Booking failed."));
     }

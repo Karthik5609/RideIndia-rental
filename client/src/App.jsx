@@ -6,16 +6,26 @@ import AuthPanel from "./components/layout/AuthPanel";
 import WebGPUHero from "./components/hero/WebGPUHero";
 import BikeCatalog from "./components/bikes/BikeCatalog";
 import CuratedRoutes from "./components/routes/CuratedRoutes";
+import RoutePlanner from "./components/routes/RoutePlanner";
+import KycVerificationPanel from "./components/kyc/KycVerificationPanel";
 import MyTrips from "./components/trips/MyTrips";
 import BikingLoader from "./components/ui/BikingLoader";
+import PwaInstallPrompt from "./components/ui/PwaInstallPrompt";
 
 function AppContent() {
   const [isBooting, setIsBooting] = useState(true);
+  const [tripRefreshSignal, setTripRefreshSignal] = useState(0);
+  const [latestBooking, setLatestBooking] = useState(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsBooting(false), 4200);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleBookingCreated = (booking) => {
+    setLatestBooking(booking || null);
+    setTripRefreshSignal((prev) => prev + 1);
+  };
 
   if (isBooting) return <BikingLoader />;
 
@@ -44,10 +54,13 @@ function AppContent() {
         </motion.section>
 
         <AuthPanel />
-        <BikeCatalog />
+        <BikeCatalog onBookingCreated={handleBookingCreated} />
+        <RoutePlanner />
         <CuratedRoutes />
-        <MyTrips />
+        <KycVerificationPanel />
+        <MyTrips refreshSignal={tripRefreshSignal} latestBooking={latestBooking} />
       </main>
+      <PwaInstallPrompt />
     </div>
   );
 }

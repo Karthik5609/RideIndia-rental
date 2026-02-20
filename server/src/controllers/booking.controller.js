@@ -1,5 +1,7 @@
 import Bike from "../models/Bike.js";
 import Booking from "../models/Booking.js";
+import User from "../models/User.js";
+import { createUserNotification } from "../services/notification.service.js";
 
 const ACTIVE_BOOKING_STATUSES = ["confirmed", "ongoing"];
 
@@ -63,6 +65,16 @@ export async function createBooking(req, res, next) {
   try {
     const { bikeId, startDate, endDate, pickupLocation, dropLocation, notes } = req.body;
 
+    const user = await User.findById(req.user.id).select("kycStatus");
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+    if (user.kycStatus !== "approved") {
+      return res.status(403).json({
+        message: "KYC approval is required before creating a booking."
+      });
+    }
+
     const parsedStart = normalizeToStartOfDay(new Date(startDate));
     const parsedEnd = normalizeToStartOfDay(new Date(endDate));
     const today = normalizeToStartOfDay(new Date());
@@ -107,6 +119,12 @@ export async function createBooking(req, res, next) {
       dropLocation,
       totalDays,
       totalPrice,
+      paymentStatus: "pending",
+      payment: {
+        provider: "mock",
+        currency: "INR",
+        amount: Math.round(totalPrice * 100)
+      },
       notes
     });
 
@@ -116,6 +134,14 @@ export async function createBooking(req, res, next) {
       "bike",
       "name brand model location pricePerDay images"
     );
+
+    await createUserNotification({
+      userId: req.user.id,
+      type: "booking",
+      title: "Booking Confirmed",
+      message: `${bike.brand} ${bike.model} booked from ${pickupLocation} to ${dropLocation}.`,
+      metadata: { bookingId: booking._id }
+    });
 
     return res.status(201).json({
       message: "Booking created successfully.",
@@ -187,6 +213,14 @@ export async function updateBooking(req, res, next) {
       "name brand model location pricePerDay images type"
     );
 
+    await createUserNotification({
+      userId: req.user.id,
+      type: "booking",
+      title: "Booking Updated",
+      message: "Your booking dates or trip details were updated successfully.",
+      metadata: { bookingId: booking._id }
+    });
+
     return res.json({
       message: "Booking updated successfully.",
       data: populatedBooking
@@ -223,6 +257,9 @@ export async function cancelBooking(req, res, next) {
     }
 
     booking.status = "cancelled";
+    if (booking.paymentStatus === "paid") {
+      booking.paymentStatus = "refunded";
+    }
     await booking.save();
     await syncBikeAvailability(booking.bike._id);
 
@@ -230,6 +267,14 @@ export async function cancelBooking(req, res, next) {
       "bike",
       "name brand model location pricePerDay images type"
     );
+
+    await createUserNotification({
+      userId: req.user.id,
+      type: "booking",
+      title: "Booking Cancelled",
+      message: "Your booking has been cancelled successfully.",
+      metadata: { bookingId: booking._id }
+    });
 
     return res.json({
       message: "Booking cancelled successfully.",

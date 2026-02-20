@@ -31,6 +31,15 @@ const bookingSchema = new mongoose.Schema(
       enum: ["pending", "paid", "failed", "refunded"],
       default: "pending"
     },
+    payment: {
+      provider: { type: String, enum: ["razorpay", "mock"], default: "mock" },
+      currency: { type: String, default: "INR" },
+      amount: { type: Number, default: 0 },
+      orderId: { type: String, trim: true, default: "" },
+      paymentId: { type: String, trim: true, default: "" },
+      signature: { type: String, trim: true, default: "" },
+      paidAt: { type: Date, default: null }
+    },
     notes: { type: String, trim: true, maxlength: 500 }
   },
   { timestamps: true }
@@ -39,4 +48,3 @@ const bookingSchema = new mongoose.Schema(
 bookingSchema.index({ bike: 1, startDate: 1, endDate: 1 });
 
 export default mongoose.model("Booking", bookingSchema);
-

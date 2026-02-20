@@ -1,4 +1,5 @@
 import { useAuth } from "../../context/AuthContext";
+import NotificationsBell from "./NotificationsBell";
 
 export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -24,8 +25,14 @@ export default function Navbar() {
         <button type="button" onClick={() => scrollToSection("explore")}>
           Explore
         </button>
+        <button type="button" onClick={() => scrollToSection("route-planner")}>
+          Route Planner
+        </button>
         <button type="button" onClick={() => scrollToSection("routes")}>
           Curated Routes
+        </button>
+        <button type="button" onClick={() => scrollToSection("kyc")}>
+          KYC
         </button>
         <button type="button" onClick={() => scrollToSection("my-trips")}>
           My Trips
@@ -35,6 +42,7 @@ export default function Navbar() {
       <div className="nav-user">
         {isAuthenticated ? (
           <>
+            <NotificationsBell />
             <span>{user?.name}</span>
             <button type="button" className="btn-outline" onClick={logout}>
               Logout

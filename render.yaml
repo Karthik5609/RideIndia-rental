@@ -27,3 +27,13 @@ services:
         value: 20
       - key: RATE_LIMIT_BOOKING_MAX_REQUESTS
         value: 80
+      - key: KYC_AUTO_APPROVE
+        value: "true"
+      - key: PAYMENTS_MOCK_MODE
+        value: "false"
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: RAZORPAY_WEBHOOK_SECRET
+        sync: false

@@ -24,6 +24,16 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["user", "admin"],
       default: "user"
+    },
+    kycStatus: {
+      type: String,
+      enum: ["not_submitted", "pending", "approved", "rejected"],
+      default: "not_submitted",
+      index: true
+    },
+    kycUpdatedAt: {
+      type: Date,
+      default: null
     }
   },
   { timestamps: true }
@@ -40,4 +50,3 @@ userSchema.methods.comparePassword = function comparePassword(plainPassword) {
 };
 
 export default mongoose.model("User", userSchema);
-

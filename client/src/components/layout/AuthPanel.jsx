@@ -39,6 +39,11 @@ export default function AuthPanel() {
       >
         <h2>Welcome back, {user?.name}</h2>
         <p>Your account is active. You can now create bookings and view your trips.</p>
+        <p>
+          KYC status: <span className={`status-pill ${user?.kycStatus || "not_submitted"}`}>
+            {user?.kycStatus || "not_submitted"}
+          </span>
+        </p>
       </motion.section>
     );
   }

@@ -9,6 +9,16 @@ function signToken(user) {
   });
 }
 
+function formatUser(user) {
+  return {
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    kycStatus: user.kycStatus || "not_submitted"
+  };
+}
+
 export async function register(req, res, next) {
   try {
     const { name, email, password } = req.body;
@@ -25,7 +35,7 @@ export async function register(req, res, next) {
 
     return res.status(201).json({
       token,
-      user: { id: user._id, name: user.name, email: user.email, role: user.role }
+      user: formatUser(user)
     });
   } catch (error) {
     return next(error);
@@ -49,8 +59,20 @@ export async function login(req, res, next) {
     const token = signToken(user);
     return res.json({
       token,
-      user: { id: user._id, name: user.name, email: user.email, role: user.role }
+      user: formatUser(user)
     });
+  } catch (error) {
+    return next(error);
+  }
+}
+
+export async function getMe(req, res, next) {
+  try {
+    const user = await User.findById(req.user.id).select("name email role kycStatus");
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+    return res.json({ data: formatUser(user) });
   } catch (error) {
     return next(error);
   }
